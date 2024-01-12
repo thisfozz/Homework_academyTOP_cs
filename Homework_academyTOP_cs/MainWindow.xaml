@@ -7,19 +7,76 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель кнопок подключения и отключения -->
+        <StackPanel 
+            Grid.Row="0" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            Margin="0,10,0,10">
+
             <Button 
-                Content="Connect to Database"
-                Width="200"
-                Height="50"
-                Margin="20"
+                Content="Подключиться" 
+                Width="100" Height="30" 
+                Margin="5" 
                 Command="{Binding ConnectCommandButton}"/>
             <Button 
-                Content="Disconnect to Database"
-                Width="200"
-                Height="50"
-                Margin="20"
+                Content="Отключиться" 
+                Width="100" Height="30" 
+                Margin="5"
                 Command="{Binding DisconnectCommandButton}"/>
+        </StackPanel>
+
+        <!-- Панель для отображения результатов -->
+        <StackPanel Grid.Row="1" Margin="10">
+
+            <!-- Кнопки для запросов -->
+            <Button Content="Показать все данные" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowAllDataCommand}"/>
+            <Button Content="Показать все названия" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowAllNamesCommand}"/>
+            <Button Content="Показать все цвета" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowAllColorsCommand}"/>
+            <Button Content="Показать максимальную калорийность" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowMaxCaloriesCommand}"/>
+            <Button Content="Показать минимальную калорийность" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowMinCaloriesCommand}"/>
+            <Button Content="Показать среднюю калорийность" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowAvgCaloriesCommand}"/>
+            <Button Content="Показать количество овощей" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowAllVegetablesCountCommand}"/>
+            <Button Content="Показать количество фруктов" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowAllFruitsCountCommand}"/>
+            <Button Content="Показать количество овощей и фруктов заданного цвета" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowItemsByColorCommand}"/>
+            <Button Content="Показать количество овощей и фруктов каждого цвета" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowItemCountByColorCommand}"/>
+            <Button Content="Показать овощи и фрукты с калорийностью ниже указанной" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowItemsBelowCaloriesCommand}"/>
+            <Button Content="Показать овощи и фрукты с калорийностью выше указанной"
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowItemsAboveCaloriesCommand}"/>
+            <Button Content="Показать овощи и фрукты с калорийностью в указанном диапазоне" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowItemsInCaloriesRangeCommand}"/>
+            <Button Content="Показать все овощи и фрукты, у которых цвет желтый или красный" 
+                    Margin="0,0,0,5"
+                    Command="{Binding ShowItemsByColorYellowRedCommand}"/>
         </StackPanel>
     </Grid>
 </Window>
