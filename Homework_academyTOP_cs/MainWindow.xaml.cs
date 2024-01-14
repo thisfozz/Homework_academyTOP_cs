@@ -1,7 +1,9 @@
 ﻿using Npgsql;
 using System.Configuration;
+using System.Data;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using VegetableFruitApp.Command;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -94,70 +96,292 @@ namespace Homework_academyTOP_cs
 
         private void ShowAllData(object obj)
         {
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
             string query = "SELECT * FROM Produce";
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+            string result = "Name\tType\tColor\tCalories\n";
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result += $"{row["name"]}\t{row["type"]}\t{row["color"]}\t{row["calories"]}\n";
+            }
+
+            MessageBox.Show(result, "Produce Table");
         }
 
         private void ShowAllNames(object obj)
         {
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
             string query = "SELECT name FROM Produce";
+
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            string result = "Names\n";
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result += $"{row["name"]}\n";
+            }
+
+            MessageBox.Show(result, "Produce Names");
         }
 
         private void ShowAllColors(object obj)
         {
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
             string query = "SELECT color FROM Produce";
-        }
 
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            string result = "Color\n";
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result += $"{row["color"]}\n";
+            }
+
+            MessageBox.Show(result, "Produce Names");
+        }
         private void ShowMaxCalories(object obj)
         {
-            string query = "SELECT calories FROM Produce ORDER BY calories DESC LIMIT 1";
-        }
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+            string query = "SELECT MAX(calories) AS MaxCalories FROM Produce";
 
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            int maxCalories = Convert.ToInt32(dataTable.Rows[0]["MaxCalories"]);
+
+            MessageBox.Show($"Максимальная калорийность: {maxCalories}", "Max Calories");
+        }
         private void ShowMinCalories(object obj)
         {
-            string query = "SELECT calories FROM Produce ORDER BY calories ASC LIMIT 1";
-        }
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+            string query = "SELECT MIN(calories) AS MinCalories FROM Produce";
 
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            int minCalories = Convert.ToInt32(dataTable.Rows[0]["MinCalories"]);
+
+            MessageBox.Show($"Минимальная колорийность калорийность: {minCalories}", "Mix Calories");
+        }
         private void ShowAvgCalories(object obj)
         {
-            string query = "SELECT AVG(calories) FROM Produce";
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+            string query = "SELECT AVG(calories) AS AvgCalories FROM Produce";
+
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            int avgCalories = Convert.ToInt32(dataTable.Rows[0]["AvgCalories"]);
+
+            MessageBox.Show($"Средняя колорийность: {avgCalories}", "Avg Calories");
         }
-
-
 
         private void ShowAllVegetablesCount(object obj)
         {
-            string query = "SELECT COUNT(*) FROM Produce WHERE type = 'Овощ'";
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+            string query = "SELECT COUNT(*) AS VegetablesCount FROM Produce WHERE type = 'Овощ'";
+
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            int vegetablesCount = Convert.ToInt32(dataTable.Rows[0]["VegetablesCount"]);
+            MessageBox.Show($"Количество овощей: {vegetablesCount}", "Vegetables Count");
         }
 
         private void ShowAllFruitsCount(object obj)
         {
-            string query = "SELECT COUNT(*) FROM Produce WHERE type = 'Фрукт'";
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+            string query = "SELECT COUNT(*) AS FruitsCount FROM Produce WHERE type = 'Фрукт'";
+
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            int fruitsCount = Convert.ToInt32(dataTable.Rows[0]["FruitsCount"]);
+            MessageBox.Show($"Количество фруктов: {fruitsCount}", "Fruits Count");
         }
 
         private void ShowItemsByColor(object obj)
         {
-            //string inputColor = Ввод_пользователя;
-            string query = "SELECT COUNT(*) FROM Produce WHERE type = 'Овощ' AND color = @color;";
-            //command.Parameters.AddWithValue("@color", inputColor);
+            string color = Microsoft.VisualBasic.Interaction.InputBox("Введите цвет:", "Ввод цвета", "");
+
+            if (!string.IsNullOrEmpty(color))
+            {
+                var productTableName = "Produce";
+                string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+                string query = "SELECT COUNT(*) AS ProduceCount FROM Produce WHERE color = @color";
+
+                using var connection = new NpgsqlConnection(connectionString);
+                connection.Open();
+    
+                using var command = new NpgsqlCommand(query, connection);
+                command.Parameters.AddWithValue("@color", color);
+
+                using var adapter = new NpgsqlDataAdapter(command);
+                var dataSet = new DataSet();
+                adapter.Fill(dataSet, productTableName);
+
+                var dataTable = dataSet.Tables[productTableName];
+
+                int produceCount = Convert.ToInt32(dataTable.Rows[0]["ProduceCount"]);
+
+                MessageBox.Show($"Количество овощей и фруктов цвета {color}: {produceCount}", "Produce Count by Color");
+            }
+
         }
 
         private void ShowItemCountByColor(object obj)
         {
-            //string query = "SELECT COUNT(*) FROM Produce WHERE type = 'Овощ'" AND type = 'Фрукт';
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+            string query = "SELECT color, type, COUNT(*) AS ProduceCount FROM Produce GROUP BY color, type";
+
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            string result = "Color\tType\tProduceCount\n";
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result += $"{row["color"]}\t{row["type"]}\t{row["ProduceCount"]}\n";
+            }
+
+            MessageBox.Show(result, "Produce Count by Color and Type");
         }
 
+        // ИСПРАВИТЬ @calories = 50 == "50"
         private void ShowItemsBelowCalories(object obj)
         {
-            //int inputColories = Ввод_пользователя;
-            string query = "SELECT COUNT(*) FROM Produce WHERE colories < @colories;";
-            //command.Parameters.AddWithValue("@colories", inputColories);
+            string calories = Microsoft.VisualBasic.Interaction.InputBox("Введите количество калорий:", "Количество калорий", "");
+
+            if (!string.IsNullOrEmpty(calories))
+            {
+                var productTableName = "Produce";
+                string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+                string query = "SELECT name FROM Produce WHERE calories < @calories";
+
+                using var connection = new NpgsqlConnection(connectionString);
+                connection.Open();
+
+                using var command = new NpgsqlCommand(query, connection);
+                command.Parameters.AddWithValue("@calories", calories);
+
+                using var adapter = new NpgsqlDataAdapter(command);
+                var dataSet = new DataSet();
+                adapter.Fill(dataSet, productTableName);
+
+                var dataTable = dataSet.Tables[productTableName];
+
+                string result = "Name\n";
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result += $"{row["name"]}\n";
+                }
+
+                MessageBox.Show(result, "Produce Names Below Calories");
+            }
         }
 
+        // ИСПРАВИТЬ @calories = 50 == "50"
         private void ShowItemsAboveCalories(object obj)
         {
-            //int inputColories = Ввод_пользователя;
-            string query = "SELECT COUNT(*) FROM Produce WHERE colories > @colories;";
-            //command.Parameters.AddWithValue("@colories", inputColories);
+            string calories = Microsoft.VisualBasic.Interaction.InputBox("Введите количество калорий:", "Количество калорий", "");
+
+            if (!string.IsNullOrEmpty(calories))
+            {
+                var productTableName = "Produce";
+                string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+                string query = "SELECT name FROM Produce WHERE calories > @calories";
+
+                using var connection = new NpgsqlConnection(connectionString);
+                connection.Open();
+
+                using var command = new NpgsqlCommand(query, connection);
+                command.Parameters.AddWithValue("@calories", calories);
+
+                using var adapter = new NpgsqlDataAdapter(command);
+                var dataSet = new DataSet();
+                adapter.Fill(dataSet, productTableName);
+
+                var dataTable = dataSet.Tables[productTableName];
+
+                string result = "Name\n";
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result += $"{row["name"]}\n";
+                }
+
+                MessageBox.Show(result, "Produce Names Below Calories");
+            }
         }
 
         private void ShowItemsInCaloriesRange(object obj)
