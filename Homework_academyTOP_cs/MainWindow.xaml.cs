@@ -316,13 +316,13 @@ namespace Homework_academyTOP_cs
             MessageBox.Show(result, "Produce Count by Color and Type");
         }
 
-        // ИСПРАВИТЬ @calories = 50 == "50"
         private void ShowItemsBelowCalories(object obj)
         {
             string calories = Microsoft.VisualBasic.Interaction.InputBox("Введите количество калорий:", "Количество калорий", "");
 
             if (!string.IsNullOrEmpty(calories))
             {
+                int caloriesINT = int.Parse(calories);
                 var productTableName = "Produce";
                 string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
                 string query = "SELECT name FROM Produce WHERE calories < @calories";
@@ -331,7 +331,7 @@ namespace Homework_academyTOP_cs
                 connection.Open();
 
                 using var command = new NpgsqlCommand(query, connection);
-                command.Parameters.AddWithValue("@calories", calories);
+                command.Parameters.AddWithValue("@calories", caloriesINT);
 
                 using var adapter = new NpgsqlDataAdapter(command);
                 var dataSet = new DataSet();
@@ -350,13 +350,13 @@ namespace Homework_academyTOP_cs
             }
         }
 
-        // ИСПРАВИТЬ @calories = 50 == "50"
         private void ShowItemsAboveCalories(object obj)
         {
             string calories = Microsoft.VisualBasic.Interaction.InputBox("Введите количество калорий:", "Количество калорий", "");
 
             if (!string.IsNullOrEmpty(calories))
             {
+                int caloriesINT = int.Parse(calories);
                 var productTableName = "Produce";
                 string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
                 string query = "SELECT name FROM Produce WHERE calories > @calories";
@@ -365,7 +365,7 @@ namespace Homework_academyTOP_cs
                 connection.Open();
 
                 using var command = new NpgsqlCommand(query, connection);
-                command.Parameters.AddWithValue("@calories", calories);
+                command.Parameters.AddWithValue("@calories", caloriesINT);
 
                 using var adapter = new NpgsqlDataAdapter(command);
                 var dataSet = new DataSet();
