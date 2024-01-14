@@ -395,7 +395,27 @@ namespace Homework_academyTOP_cs
 
         private void ShowItemsByColorYellowRed(object obj)
         {
-            //string query = "SELECT COUNT(*) FROM Produce WHERE color = 'Желтный'" AND color = 'Красный';
+            var productTableName = "Produce";
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStr"].ConnectionString;
+            string query = "SELECT name FROM Produce WHERE color = 'Желтый' OR color = 'Красный'";
+
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            var adapter = new NpgsqlDataAdapter(query, connection);
+            var dataSet = new DataSet();
+            adapter.Fill(dataSet, productTableName);
+
+            var dataTable = dataSet.Tables[productTableName];
+
+            string result = "Name:\n";
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result += $"{row["name"]}\n";
+            }
+
+            MessageBox.Show(result, "Produce Names Color - Yellow OR Red");
         }
     }
 }
