@@ -77,7 +77,6 @@ namespace Homework_academyTOP_cs
                 MessageBox.Show("Уже существует активное подключение.");
             }
         }
-
         private void DisconnectFromDatabase(object obj)
         {
             if (connection != null && connection.State == System.Data.ConnectionState.Open)
@@ -90,7 +89,6 @@ namespace Homework_academyTOP_cs
                 MessageBox.Show("Нет активного подключения для отключения.");
             }
         }
-
         private void ExecuteIfConnectionOpen(Action action)
         {
             if (connection != null && connection.State == ConnectionState.Open)
@@ -102,7 +100,6 @@ namespace Homework_academyTOP_cs
                 MessageBox.Show("Нет подключения к базе данных");
             }
         }
-
         private int GetCaloriesInput()
         {
             string calories = Microsoft.VisualBasic.Interaction.InputBox("Введите количество калорий:", "Количество калорий", "");
@@ -114,12 +111,12 @@ namespace Homework_academyTOP_cs
 
             return -1;
         }
-
         private void ShowAllData(object obj)
         {
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT * FROM Produce";
+
                 using var command = new NpgsqlCommand(query, connection);
                 using var reader = command.ExecuteReader();
 
@@ -137,6 +134,7 @@ namespace Homework_academyTOP_cs
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT name FROM Produce";
+
                 using var command = new NpgsqlCommand(query, connection);
                 using var reader = command.ExecuteReader();
 
@@ -155,6 +153,7 @@ namespace Homework_academyTOP_cs
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT color FROM Produce";
+
                 using var command = new NpgsqlCommand(query, connection);
                 using var reader = command.ExecuteReader();
 
@@ -173,6 +172,7 @@ namespace Homework_academyTOP_cs
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT MAX(calories) AS MaxCalories FROM Produce";
+
                 using var command = new NpgsqlCommand(query, connection);
                 using var reader = command.ExecuteReader();
 
@@ -191,6 +191,7 @@ namespace Homework_academyTOP_cs
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT MIN(calories) AS MinCalories FROM Produce";
+
                 using var command = new NpgsqlCommand(query, connection);
                 using var reader = command.ExecuteReader();
 
@@ -209,6 +210,7 @@ namespace Homework_academyTOP_cs
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT AVG(calories) AS AvgCalories FROM Produce";
+
                 using var command = new NpgsqlCommand(query, connection);
                 using var reader = command.ExecuteReader();
 
@@ -245,6 +247,7 @@ namespace Homework_academyTOP_cs
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT COUNT(*) AS FruitsCount FROM Produce WHERE type = 'Фрукт'";
+
                 using var command = new NpgsqlCommand(query, connection);
                 using var reader = command.ExecuteReader();
 
@@ -288,6 +291,7 @@ namespace Homework_academyTOP_cs
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT color, type, COUNT(*) AS ProduceCount FROM Produce GROUP BY color, type";
+
                 using var command = new NpgsqlCommand(query, connection);
                 using var reader = command.ExecuteReader();
 
@@ -326,7 +330,6 @@ namespace Homework_academyTOP_cs
                 }
             });
         }
-
         private void ShowItemsAboveCalories(object obj)
         {
             ExecuteIfConnectionOpen(() =>
@@ -384,7 +387,6 @@ namespace Homework_academyTOP_cs
                 }
             });
         }
-
         private void ShowItemsByColorYellowRed(object obj)
         {
             ExecuteIfConnectionOpen(() =>
