@@ -322,7 +322,7 @@ namespace Homework_academyTOP_cs
                         result += $"{reader["name"]}\n";
                     }
 
-                    MessageBox.Show(result, "Produce Names Below Calories");
+                    MessageBox.Show(result, "Названия продуктов ниже указанной");
                 }
             });
         }
@@ -348,7 +348,7 @@ namespace Homework_academyTOP_cs
                         result += $"{reader["name"]}\n";
                     }
 
-                    MessageBox.Show(result, "Produce Names Above Calories");
+                    MessageBox.Show(result, "Названия продуктов выше указанной");
                 }
             });
         }
@@ -401,7 +401,7 @@ namespace Homework_academyTOP_cs
                     result += $"{reader["name"]}\n";
                 }
 
-                MessageBox.Show(result, "Produce Names Color - Yellow OR Red");
+                MessageBox.Show(result, "Названия продуктов с желтым или красным цветом");
             });
         }
     }
