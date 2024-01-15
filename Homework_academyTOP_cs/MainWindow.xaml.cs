@@ -111,14 +111,19 @@ namespace Homework_academyTOP_cs
 
             return -1;
         }
+        private NpgsqlDataReader ExecuteReaderQuery(string query)
+        {
+            using var command = new NpgsqlCommand(query, connection);
+            return command.ExecuteReader();
+        }
+
         private void ShowAllData(object obj)
         {
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT * FROM Produce";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 string result = "Name\tType\tColor\tCalories\n";
 
@@ -135,8 +140,7 @@ namespace Homework_academyTOP_cs
             {
                 string query = "SELECT name FROM Produce";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 string result = "Names\n";
 
@@ -154,8 +158,7 @@ namespace Homework_academyTOP_cs
             {
                 string query = "SELECT color FROM Produce";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 string result = "Color\n";
 
@@ -173,8 +176,7 @@ namespace Homework_academyTOP_cs
             {
                 string query = "SELECT MAX(calories) AS MaxCalories FROM Produce";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 int maxCalories = 0;
 
@@ -192,8 +194,7 @@ namespace Homework_academyTOP_cs
             {
                 string query = "SELECT MIN(calories) AS MinCalories FROM Produce";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 int minCalories = 0;
 
@@ -211,8 +212,7 @@ namespace Homework_academyTOP_cs
             {
                 string query = "SELECT AVG(calories) AS AvgCalories FROM Produce";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 int avgCalories = 0;
 
@@ -229,8 +229,8 @@ namespace Homework_academyTOP_cs
             ExecuteIfConnectionOpen(() =>
             {
                 string query = "SELECT COUNT(*) AS VegetablesCount FROM Produce WHERE type = 'Овощ'";
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+
+                using var reader = ExecuteReaderQuery(query);
 
                 int vegetablesCount = 0;
 
@@ -248,8 +248,7 @@ namespace Homework_academyTOP_cs
             {
                 string query = "SELECT COUNT(*) AS FruitsCount FROM Produce WHERE type = 'Фрукт'";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 int fruitsCount = 0;
 
@@ -292,8 +291,7 @@ namespace Homework_academyTOP_cs
             {
                 string query = "SELECT color, type, COUNT(*) AS ProduceCount FROM Produce GROUP BY color, type";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 string result = "Color\tType\tProduceCount\n";
 
@@ -393,8 +391,7 @@ namespace Homework_academyTOP_cs
             {
                 string query = "SELECT name FROM Produce WHERE color = 'Желтый' OR color = 'Красный'";
 
-                using var command = new NpgsqlCommand(query, connection);
-                using var reader = command.ExecuteReader();
+                using var reader = ExecuteReaderQuery(query);
 
                 string result = "Name:\n";
 
